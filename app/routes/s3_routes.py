@@ -52,8 +52,18 @@ def update_file():
     conn = s3_connection()
 
     with open('sai.jpg', "rb") as f:
-        conn.put_object(Bucket=bucket_name, Key='bunny.jpeg', Body=f)
+        conn.put_object(Bucket=bucket_name, Key='tweety.jpeg', Body=f)
 
-    public_url=f"https://{bucket_name}.s3.us-east-1.amazonaws.com/bunny.jpeg"
+    public_url=f"https://{bucket_name}.s3.us-east-1.amazonaws.com/tweety.jpeg"
 
     return jsonify({"message": f"data updated: url: {public_url}"}), 201
+
+
+@api_blueprint.route('/delete_file', methods=['DELETE'])
+def delete_file():
+    conn = s3_connection()
+
+    conn.delete_object(Bucket=bucket_name, Key='bunny.jpeg')
+
+
+    return jsonify({"message": f"data deleted"}), 201
